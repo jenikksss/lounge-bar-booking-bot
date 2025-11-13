@@ -31,7 +31,10 @@ signal.signal(signal.SIGTERM, handle_exit)
 
 # === КОНФИГУРАЦИЯ ===
 # Используем переменные окружения Railway
-BOT_TOKEN = os.environ.get('BOT_TOKEN', '7546412473:AAGPRVfkVoTjf4e-yLzRk5WIS0a0nM74Evg')
+BOT_TOKEN = os.environ.get('BOT_TOKEN')
+if not BOT_TOKEN:
+    logger.error("❌ BOT_TOKEN не установлен!")
+    exit(1)
 bot = telebot.TeleBot(BOT_TOKEN)
 
 # Обновленные данные ресторана
@@ -1787,4 +1790,5 @@ if __name__ == '__main__':
         except Exception as e:
             logger.error(f"❌ Ошибка бота: {e}")
             print("🔄 Перезапуск через 10 секунд...")
+
             time_module.sleep(10)
